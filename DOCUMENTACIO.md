@@ -245,4 +245,8 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ```
-
+# Script Insertar dades a la taula eleccions
+```sql
+INSERT INTO eleccions (eleccio_id,nom,data)
+	VALUES (2,'Congreso',20160626);
+```

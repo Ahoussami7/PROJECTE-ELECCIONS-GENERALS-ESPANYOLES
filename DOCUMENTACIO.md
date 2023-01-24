@@ -250,3 +250,41 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO eleccions (eleccio_id,nom,data)
 	VALUES (2,'Congreso',20160626);
 ```
+# Python Inserts Candidatures
+```python
+import mysql.connector
+import sys
+
+cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
+cursor = cnx.cursor()
+
+pathFitxer = "03021606.DAT"
+try :
+    with open(pathFitxer, "r") as fitxer:
+        for linia in fitxer:
+            print(linia)
+
+            eleccio_id = linia[0:2]
+            codi_candidatura = linia[8:14]
+            nom_curt = linia[14:64]
+            nom_llarg = linia[64:214]
+            codi_acumulacio_provincia = linia[214:220]
+            codi_acumulacio_ca = linia[220:226]
+            codi_acumulario_nacional = linia[226:232]
+
+            vots_insert_municipis = ("INSERT INTO candidatures "
+                        "(eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulario_nacional) "
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s)")
+            
+            dades = [eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulario_nacional]
+
+            candidatura_id = cursor.lastrowid
+
+            cursor.execute(vots_insert_municipis, dades)
+            cnx.commit()
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
+
+cursor.close()
+cnx.close()
+```

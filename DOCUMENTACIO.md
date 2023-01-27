@@ -247,6 +247,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ```
 # Script BD_eleccions_v2.sql
 ```sql
+-- Insert de la taula eleccions
+INSERT INTO eleccions (eleccio_id,nom,data)
+	VALUES (2,'Congreso',20160626);
+-- DROP de las uniques
 DROP INDEX uk_candidats_persona_cand ON candidats;
 DROP INDEX uk_eleccions_partits ON candidatures;
 DROP INDEX uk_com_aut_codi_ine ON comunitats_autonomes;
@@ -257,12 +261,7 @@ DROP INDEX uk_municipis_codi_ine ON municipis;
 DROP INDEX uk_candidats_dni ON persones;
 DROP INDEX uk_provincies_codi_ine ON provincies;
 ```
-# Script Insertar dades a la taula eleccions
-```sql
-INSERT INTO eleccions (eleccio_id,nom,data)
-	VALUES (2,'Congreso',20160626);
-```
-# Python Inserts Candidatures
+# Insert de la taula Candidatures
 ```python
 import mysql.connector
 import sys

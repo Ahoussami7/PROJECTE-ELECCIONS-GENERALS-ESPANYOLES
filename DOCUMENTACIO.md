@@ -300,3 +300,43 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
+# Insert de la taula municipis
+```python
+import mysql.connector
+
+cnx = mysql.connector.connect(
+  host="192.168.56.101",
+  user="perepi",
+  password="pastanaga",
+  database="eleccions"
+)
+
+cursor = cnx.cursor()
+
+# Nom o path del fitxer
+f = ("05021606.DAT")
+
+try :
+    # Intentem obrir el fitxer en només lectura
+    with open(f, "r") as fitxer:
+        for linia in fitxer:
+            # Tractem la línia del fitxer
+            nom = linia[18:118]
+            codi_ine = linia[13:16]
+            provincia_id = linia[11:13]
+            districte = linia[119]
+
+            insert = ("INSERT INTO municipis " 
+                        "(nom,codi_ine,provincia_id,districte) " 
+                          "VALUES (%s,%s,%s,%s)")
+            val = [nom,codi_ine,provincia_id,districte]
+            
+            cursor.execute(insert, val)
+            cnx.commit()
+
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
+
+cursor.close()
+cnx.close()
+```

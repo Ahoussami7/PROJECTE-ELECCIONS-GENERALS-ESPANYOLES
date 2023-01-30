@@ -248,8 +248,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 # Script BD_eleccions_v2.sql
 ```sql
 -- Insert de la taula eleccions
-INSERT INTO eleccions (eleccio_id,nom,data)
-	VALUES (2,'Congreso',20160626);
+INSERT INTO eleccions (nom,data)
+	VALUES ('Congreso',20160626);
 -- DROP de las uniques
 DROP INDEX uk_candidats_persona_cand ON candidats;
 DROP INDEX uk_eleccions_partits ON candidatures;

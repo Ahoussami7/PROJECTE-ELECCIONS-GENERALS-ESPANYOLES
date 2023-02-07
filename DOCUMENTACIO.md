@@ -300,7 +300,8 @@ cursor.close()
 cnx.close()
 ```
 # Insert de la taula comunitats autònomes + Taula Provincies:
-```import mysql.connector
+```python
+import mysql.connector
 
 cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
 

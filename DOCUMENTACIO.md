@@ -408,3 +408,68 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
+# Insert de la Taula Persones + Taula Candidats:
+```python
+import mysql.connector
+import sys
+cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
+cursor = cnx.cursor()
+
+truncate = "TRUNCATE TABLE persones"
+cursor.execute(truncate)
+
+truncate = "TRUNCATE TABLE candidats"
+cursor.execute(truncate)
+
+pathFitxer = "04021606.DAT"
+try :
+    with open(pathFitxer, "r") as fitxer:
+        for linia in fitxer:
+
+            # Taula Persones Inici
+            nom=linia[25:50]
+            cog1=linia[50:75]
+            cog2=linia[75:100]
+
+            insert_persones = ("INSERT INTO persones "
+                "(nom, cog1, cog2) "
+                "VALUES (%s, %s, %s)")
+
+            dades = [nom, cog1, cog2]
+
+            persona_id = cursor.lastrowid
+
+            cursor.execute(insert_persones, dades)
+            cnx.commit()
+            # Taula Persones Fi
+
+
+            # Taula Candidats Inici
+            candidatura_id = linia[15:21]
+            num_ordre = linia[21:24]
+            tipus = linia[24]
+            
+            provincia_id = "SELECT provincia_id FROM provincies WHERE codi_ine = %s"
+            a = linia[9:11]
+            b = []
+            b.append(a)
+            cursor.execute(provincia_id, b)
+            
+            for x in cursor:
+                taula_candidats = ("INSERT INTO candidats "
+                    "(candidatura_id, persona_id, provincia_id, num_ordre, tipus) "
+                    "VALUES (%s, %s, %s, %s, %s)")
+
+                y=list(x)
+                dades = [candidatura_id, persona_id+1, y[0], num_ordre, tipus]
+
+                cursor.execute(taula_candidats, dades)
+                cnx.commit()
+            # Taula Candidats Fi
+
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
+
+cursor.close()
+cnx.close()
+```

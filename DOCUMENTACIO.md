@@ -264,18 +264,21 @@ DROP INDEX uk_provincies_codi_ine ON provincies;
 # Insert de la taula Candidatures
 ```python
 import mysql.connector
+import datetime
 import sys
 
 cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
 cursor = cnx.cursor()
 
+truncate = "TRUNCATE TABLE candidatures"
+cursor.execute(truncate)
+
 pathFitxer = "03021606.DAT"
 try :
     with open(pathFitxer, "r") as fitxer:
         for linia in fitxer:
-            print(linia)
-
-            eleccio_id = linia[0:2]
+            
+            # Inici Taula Candidatures
             codi_candidatura = linia[8:14]
             nom_curt = linia[14:64]
             nom_llarg = linia[64:214]
@@ -283,16 +286,26 @@ try :
             codi_acumulacio_ca = linia[220:226]
             codi_acumulario_nacional = linia[226:232]
 
-            vots_insert_municipis = ("INSERT INTO candidatures "
-                        "(eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulario_nacional) "
-                        "VALUES (%s, %s, %s, %s, %s, %s, %s)")
-            
-            dades = [eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulario_nacional]
+            eleccio_id = "SELECT eleccio_id FROM eleccions WHERE eleccio_id = %s"
+            a = linia[0:2]
+            b=[]
+            b.append(a)
+            cursor.execute(eleccio_id, b)
 
-            candidatura_id = cursor.lastrowid
+            for x in cursor:
+                vots_insert_municipis = ("INSERT INTO candidatures "
+                            "(eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulario_nacional) "
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                
+                y=list(x)
+                dades = [y[0], codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulario_nacional]
 
-            cursor.execute(vots_insert_municipis, dades)
-            cnx.commit()
+                candidatura_id = cursor.lastrowid
+
+                cursor.execute(vots_insert_municipis, dades)
+                cnx.commit()
+            # Fi Taula Candidatures
+
 except OSError as e:
     print("No s'ha pogut obrir el fitxer")
 

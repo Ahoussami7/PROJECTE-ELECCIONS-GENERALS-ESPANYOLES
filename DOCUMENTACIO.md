@@ -299,41 +299,80 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la taula comunitats autònomes
-```python
-import mysql.connector
+# Insert de la taula comunitats autònomes + Taula Provincies:
+```import mysql.connector
 
-cnx = mysql.connector.connect(
-  host="192.168.56.101",
-  user="perepi",
-  password="pastanaga",
-  database="eleccions"
-)
+cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
 
 cursor = cnx.cursor()
 
-# Nom o path del fitxer
+truncate = ("TRUNCATE provincies")
+cursor.execute(truncate)
+
+truncate = ("TRUNCATE comunitats_autonomes")
+cursor.execute(truncate)
+
+alter = """ALTER TABLE provincies
+ALTER num_escons SET DEFAULT 0;"""
+cursor.execute(alter)
+
+alter = """ALTER TABLE provincies
+ALTER num_escons SET DEFAULT 0;"""
+cursor.execute(alter)
+
+
 f = ("07021606.DAT")
 
 try :
-    # Intentem obrir el fitxer en només lectura
     with open(f, "r") as fitxer:
-        for linia in fitxer:
-            # Tractem la línia del fitxer
-            nom = linia[14:64]
-            codi_ine = linia[11:13]
+      for linia in fitxer:
 
-            insert = ("INSERT INTO comunitats_autonomes " 
-                        "(nom,codi_ine) " 
-                          "VALUES (%s,%s)")
-            val = [nom, codi_ine]
-            
-            cursor.execute(insert, val)
-            cnx.commit()
+        # Inici Taula Comunitats Autònomes 
+        num_escons = linia[149:155]
+        codi_ine = linia[11:13]
+        comunitat_aut_id = linia[9:11]
+        nom = linia[14:64]
+
+        if (int(comunitat_aut_id) in range(0,20)) and (codi_ine == '99'):
+          insert = ("INSERT INTO comunitats_autonomes (nom,codi_ine)"
+                    " VALUES (%s,%s)")
+          val = [nom, comunitat_aut_id]
+          
+          cursor.execute(insert, val)
+          cnx.commit()
+        # Fi Taula Comunitats Autònomes
 
 except OSError as e:
     print("No s'ha pogut obrir el fitxer")
 
+try :
+    with open(f, "r") as fitxer:
+      for linia in fitxer:
+
+        # Inici Taula Provincies
+        num_escons = linia[149:155]
+        codi_ine = linia[11:13]
+        nom = linia[14:64]
+
+        query = ("SELECT comunitat_aut_id FROM comunitats_autonomes WHERE codi_ine = %s")
+        a = linia[9:11]
+        b = []
+        b.append(a)
+        cursor.execute(query, b)
+
+        for x in cursor:
+            if (codi_ine not in range(0,20)) and (codi_ine != "99"):
+                insert = ("INSERT INTO provincies (comunitat_aut_id, nom, codi_ine, num_escons)"
+                                " VALUES (%s,%s,%s,%s)")
+                y=list(x)
+                val = (y[0], nom, codi_ine, num_escons)
+        
+                cursor.execute(insert, val)
+                cnx.commit()
+        # Fi Taula Provincies
+
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
 
 cursor.close()
 cnx.close()

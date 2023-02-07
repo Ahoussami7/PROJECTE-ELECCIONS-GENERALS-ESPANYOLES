@@ -304,7 +304,6 @@ cnx.close()
 import mysql.connector
 
 cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
-
 cursor = cnx.cursor()
 
 truncate = ("TRUNCATE provincies")
@@ -312,15 +311,6 @@ cursor.execute(truncate)
 
 truncate = ("TRUNCATE comunitats_autonomes")
 cursor.execute(truncate)
-
-alter = """ALTER TABLE provincies
-ALTER num_escons SET DEFAULT 0;"""
-cursor.execute(alter)
-
-alter = """ALTER TABLE provincies
-ALTER num_escons SET DEFAULT 0;"""
-cursor.execute(alter)
-
 
 f = ("07021606.DAT")
 

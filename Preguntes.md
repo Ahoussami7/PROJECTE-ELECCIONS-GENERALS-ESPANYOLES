@@ -82,6 +82,6 @@ Categoria 4: 1 pregunta utilitzant WINDOW FUNCTIONS o recursivitat
 Selecciona de cada empleat el total de vots(ca+mun+prov) de la seva candidatura.
 
 
-|Candidatures|Totalcndts|
+|empleat|candidatura|Totalvots|
 
 

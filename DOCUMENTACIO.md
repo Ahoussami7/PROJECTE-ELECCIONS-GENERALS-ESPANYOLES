@@ -398,12 +398,7 @@ cnx.close()
 ```python
 import mysql.connector
 
-cnx = mysql.connector.connect(
-  host="192.168.56.101",
-  user="perepi",
-  password="pastanaga",
-  database="eleccions"
-)
+cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
 
 cursor = cnx.cursor()
 
@@ -412,6 +407,9 @@ f = ("05021606.DAT")
 
 truncate=("TRUNCATE TABLE municipis;")
 cursor.execute(truncate)
+
+alter = ("ALTER TABLE municipis MODIFY COLUMN codi_ine char(6);")
+cursor.execute(alter)
 
 try :
     # Intentem obrir el fitxer en només lectura
@@ -434,7 +432,8 @@ try :
                          "VALUES (%s,%s,%s,%s)")
             y=list(x)
             provincia_id = x[0]
-            val = [nom,codi_ine,provincia_id,districte]
+            mcodi_ine = (f"{a}{codi_ine}")
+            val = [nom,mcodi_ine,provincia_id,districte]
               
             cursor.execute(insert, val)
             cnx.commit()

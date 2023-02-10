@@ -10,32 +10,32 @@ funcions d'agregat o grups:
 ### la taula s'ha de veure de la següent manera: #
 
 
-<span style="color: red;">|Nom + cognoms|Titular|Suplent|</span>
+|Nom + cognoms|Titular|Suplent|
 
 * * * 
 **Quines denominacions de candidatures contenen "CATALUNYA" en el seu nom, ordena el resultat per codi d'acumulació a nivell autonòmic amb el CAA i per el seu nom:**
 
 
-<span style="color: red;">|Candidatura|CAA|</span>
+|Candidatura|CAA|
 
 * * *
 **Enumerar els municipis amb el seu total de vots a candidatures i també
 els vots nuts que hagin obtingut agrupat per vots a candidatures:**
 
 
-<span style="color: red;">|Municipis|Vtotals|VNuls|</span>
+|Municipis|Vtotals|VNuls|
 
 * * *
 **Quants municipis tenen Total municipal amb INE entre 100-101 Descendent:**
 
 
-<span style="color: red;">|Municipis|TMNCP|</span>
+|Municipis|TMNCP|
 
 * * *
 **Els municipis que tinguin menys de 10000000 vots en blanc ha de tenir
 les dades oficials amb valor No.**
 
-<span style="color: red;">|Municipis|Vots blanc|NoOficial|</span>
+|Municipis|Vots blanc|NoOficial|
 
 * * *
 Categoria 2: 5 preguntes de consultes de combinacions de més d'una taula:
@@ -48,33 +48,40 @@ INNER JOINS, LEFT JOINS:
 de catalunya?**
 
 
-<span style="color: red;">|Com.Autonoma|horapt|</span>
+|Com.Autonoma|horapt|
 
 * * *
 **Mostra la denominació de candidatura on hi hagin més vots en blanc.**
 
 
-<span style="color: red;">|Denm_Canddt|vtsblc|</span>
+|Denm_Canddt|vtsblc|
 
 * * *
 **Quins candidats han sortit com a molt 10 vegades l'any 2016 on
 el número de candidats obtenits per la candidatura siguin més de 2.**
 
 
-<span style="color: red;">|candidat|</span>
+|candidat|
 
 * * *
 **Mostra totes les sigles de candidatures que continguin totes les vocals en el seu nom i la suma dels vots provincials, municipals i de comunitats autonomes en una sola columna.**
 
 
-<span style="color: red;">|Sigles|Totalvots|</span>
+|Sigles|Totalvots|
 
 * * *
 **Fes un top 5 candidatures amb menys vots de l'any 2016, juntament amb el total de candidats de cada candidatura.**
 
 
-<span style="color: red;">|Candidatures|Totalcndts|</span>
+|Candidatures|Totalcndts|
+
+* * *
+Categoria 4: 1 pregunta utilitzant WINDOW FUNCTIONS o recursivitat
+------------------------------------------------------------------
+* * *
+Selecciona de cada empleat el total de vots(ca+mun+prov) de la seva candidatura.
 
 
+|Candidatures|Totalcndts|
 
 

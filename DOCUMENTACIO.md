@@ -397,24 +397,35 @@ cursor = cnx.cursor()
 # Nom o path del fitxer
 f = ("05021606.DAT")
 
+truncate=("TRUNCATE TABLE municipis;")
+cursor.execute(truncate)
+
 try :
     # Intentem obrir el fitxer en només lectura
     with open(f, "r") as fitxer:
         for linia in fitxer:
-            # Tractem la línia del fitxer
-            nom = linia[18:118]
-            codi_ine = linia[13:16]
-            provincia_id = linia[11:13]
-            districte = linia[119]
+          # Tractem la línia del fitxer
+          nom = linia[18:118]
+          codi_ine = linia[13:16]
+          districte = linia[119]
 
+          query = ("SELECT provincia_id FROM provincies WHERE codi_ine = %s")
+          a = linia[11:13]
+          b = []
+          b.append(a)
+          cursor.execute(query, b)
+
+          for x in cursor:
             insert = ("INSERT INTO municipis " 
-                        "(nom,codi_ine,provincia_id,districte) " 
-                          "VALUES (%s,%s,%s,%s)")
+                       "(nom,codi_ine,provincia_id,districte) " 
+                         "VALUES (%s,%s,%s,%s)")
+            y=list(x)
+            provincia_id = x[0]
             val = [nom,codi_ine,provincia_id,districte]
-            
+              
             cursor.execute(insert, val)
             cnx.commit()
-
+          
 except OSError as e:
     print("No s'ha pogut obrir el fitxer")
 

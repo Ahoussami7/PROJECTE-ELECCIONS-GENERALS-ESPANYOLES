@@ -260,6 +260,19 @@ DROP INDEX uk_eleccions_municipis ON eleccions_municipis;
 DROP INDEX uk_municipis_codi_ine ON municipis;
 DROP INDEX uk_candidats_dni ON persones;
 DROP INDEX uk_provincies_codi_ine ON provincies;
+
+ALTER TABLE persones
+    DROP PRIMARY KEY;
+
+ALTER TABLE persones
+	DROP COLUMN persona_id;
+
+ALTER TABLE persones
+    ADD COLUMN persona_id INT UNSIGNED AUTO_INCREMENT,
+    ADD CONSTRAINT pk_persones PRIMARY KEY (persona_id);
+
+ALTER TABLE persones
+    MODIFY COLUMN dni char(10) NULL;
 ```
 # Insert de la taula Candidatures
 ```python

@@ -6,8 +6,8 @@ Categoria 1: 5 preguntes de consultes simples: inclou una sola taula, funcions,
 funcions d'agregat o grups:
 ---------------------------
 * * *
-###Enumera els candidats (Ascendent) que siguin Titulars(T) i els que siguin Suplents(S),
-###la taula s'ha de veure de la següent manera:
+**Enumera els candidats (Ascendent) que siguin Titulars(T) i els que siguin Suplents(S),
+la taula s'ha de veure de la següent manera:**
 
 
 |Nom + cognoms|Titular|Suplent|

@@ -13,27 +13,27 @@ funcions d'agregat o grups:
 |Nom + cognoms|Titular|Suplent|
 
 * * * 
-**Quines denominacions de candidatures contenen "CATALUNYA" en el seu nom, ordena el resultat per codi d'acumulació a nivell autonòmic amb el CAA i per el seu nom:
+**Quines denominacions de candidatures contenen "CATALUNYA" en el seu nom, ordena el resultat per codi d'acumulació a nivell autonòmic amb el CAA i per el seu nom:**
 
 
 |Candidatura|CAA|
 
 * * *
 **Enumerar els municipis amb el seu total de vots a candidatures i també
-els vots nuts que hagin obtingut agrupat per vots a candidatures:
+els vots nuts que hagin obtingut agrupat per vots a candidatures:**
 
 
 |Municipis|Vtotals|VNuls|
 
 * * *
-**Quants municipis tenen Total municipal amb INE entre 100-101 Descendent:
+**Quants municipis tenen Total municipal amb INE entre 100-101 Descendent:**
 
 
 |Municipis|TMNCP|
 
 * * *
 **Els municipis que tinguin menys de 10000000 vots en blanc ha de tenir
-les dades oficials amb valor No.
+les dades oficials amb valor No.**
 
 |Municipis|Vots blanc|NoOficial|
 
@@ -45,20 +45,20 @@ INNER JOINS, LEFT JOINS:
 * * *
 
 **Quina es la hora d'apertura dels colegis electorals a la comunitat autonoma
-de catalunya?
+de catalunya?**
 
 
 |Com.Autonoma|horapt|
 
 * * *
-**Mostra la denominació de candidatura on hi hagin més vots en blanc.
+**Mostra la denominació de candidatura on hi hagin més vots en blanc.**
 
 
 |Denm_Canddt|vtsblc|
 
 * * *
 **Quins candidats han sortit com a molt 10 vegades l'any 2016 on
-el número de candidats obtenits per la candidatura siguin més de 2.
+el número de candidats obtenits per la candidatura siguin més de 2.**
 
 
 |candidat|

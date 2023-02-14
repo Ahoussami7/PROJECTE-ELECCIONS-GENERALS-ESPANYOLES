@@ -13,7 +13,7 @@ la taula s'ha de veure de la següent manera:**
 |Nom + cognoms|Titular|Suplent|
 
 * * * 
-**Quines denominacions de candidatures contenen "CATALUNYA" en el seu nom, ordena el resultat per codi d'acumulació a nivell autonòmic amb el CAA i per el seu nom:**
+**Segons la comunitat Catalunya, quin numero d'escons té ordenats descendent.**
 
 
 |Candidatura|CAA|

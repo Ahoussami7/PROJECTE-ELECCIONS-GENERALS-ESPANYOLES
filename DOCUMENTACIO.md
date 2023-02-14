@@ -279,10 +279,8 @@ ALTER TABLE persones
 # Insert de la taula Candidatures
 ```python
 import mysql.connector
-import datetime
-import sys
 
-cnx = mysql.connector.connect(host='192.168.56.103',user='perepi',password='pastanaga', database='eleccions')
+cnx = mysql.connector.connect(host='192.168.56.101',user='perepi',password='pastanaga', database='eleccions')
 cursor = cnx.cursor()
 
 truncate = "TRUNCATE TABLE candidatures"

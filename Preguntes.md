@@ -10,7 +10,7 @@ funcions d'agregat o grups:
 la taula s'ha de veure de la següent manera:**
 
 
-|Nom + cognoms|Titular|Suplent|
+|candidat_id|T/S|
 
 * * * 
 **Segons la comunitat Catalunya, quin numero d'escons té ordenats descendent.**

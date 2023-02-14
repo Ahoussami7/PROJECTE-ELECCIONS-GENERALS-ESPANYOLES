@@ -248,8 +248,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 # Script BD_eleccions_v2.sql
 ```sql
 -- Insert de la taula eleccions
-INSERT INTO eleccions (nom,data)
-	VALUES ('Congreso',20160626);
+INSERT INTO eleccions (eleccio_id,nom,data)
+	VALUES (2,'Congreso',20160626);
 -- DROP de las uniques
 DROP INDEX uk_candidats_persona_cand ON candidats;
 DROP INDEX uk_eleccions_partits ON candidatures;
@@ -260,7 +260,9 @@ DROP INDEX uk_eleccions_municipis ON eleccions_municipis;
 DROP INDEX uk_municipis_codi_ine ON municipis;
 DROP INDEX uk_candidats_dni ON persones;
 DROP INDEX uk_provincies_codi_ine ON provincies;
+--
 
+-- Taula persones
 ALTER TABLE persones
     DROP PRIMARY KEY;
 
@@ -272,7 +274,7 @@ ALTER TABLE persones
     ADD CONSTRAINT pk_persones PRIMARY KEY (persona_id);
 
 ALTER TABLE persones
-    MODIFY COLUMN dni char(10) NULL;
+    MODIFY COLUMN dni CHAR(10) NULL;
 ```
 # Insert de la taula Candidatures
 ```python

@@ -16,7 +16,7 @@ la taula s'ha de veure de la següent manera:**
 **Segons la comunitat Catalunya, quin numero d'escons té ordenats descendent.**
 
 
-|Candidatura|CAA|
+|nom|num_escons|
 
 * * *
 **Enumerar els municipis amb el seu total de vots a candidatures i també

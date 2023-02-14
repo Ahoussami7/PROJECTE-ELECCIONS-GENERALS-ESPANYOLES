@@ -19,8 +19,7 @@ la taula s'ha de veure de la següent manera:**
 |nom|num_escons|
 
 * * *
-**Enumerar els municipis amb el seu total de vots a candidatures i també
-els vots nuts que hagin obtingut agrupat per vots a candidatures:**
+**FA FALTA PREGUNTA NOVA**
 
 
 |Municipis|Vtotals|VNuls|

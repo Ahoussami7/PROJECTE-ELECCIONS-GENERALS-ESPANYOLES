@@ -64,13 +64,13 @@ el número de candidats obtenits per la candidatura siguin més de 2.**
 |candidat|
 
 * * *
-**Mostra totes les sigles de candidatures que continguin totes les vocals en el seu nom i la suma dels vots provincials, municipals i de comunitats autonomes en una sola columna.
+**Mostra totes les sigles de candidatures que continguin totes les vocals en el seu nom i la suma dels vots provincials, municipals i de comunitats autonomes en una sola columna.**
 
 
 |Sigles|Totalvots|
 
 * * *
-**Fes un top 5 candidatures amb menys vots de l'any 2016, juntament amb el total de candidats de cada candidatura.
+**Fes un top 5 candidatures amb menys vots de l'any 2016, juntament amb el total de candidats de cada candidatura.**
 
 
 |Candidatures|Totalcndts|

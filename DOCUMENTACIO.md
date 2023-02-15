@@ -325,7 +325,7 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la taula comunitats autònomes + Taula Provincies:
+# Insert de la taula comunitats autònomes + Taula Provincies
 ```python
 import mysql.connector
 
@@ -444,7 +444,7 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la Taula Persones + Taula Candidats:
+# Insert de la Taula Persones + Taula Candidats
 ```python
 import mysql.connector
 import sys
@@ -503,6 +503,73 @@ try :
                 cnx.commit()
             # Taula Candidats Fi
 
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
+
+cursor.close()
+cnx.close()
+```
+# Insert de la Taula vots_candidatures_prov
+```sql
+import mysql.connector
+
+cnx = mysql.connector.connect(
+  host="192.168.56.101",
+  user="perepi",
+  password="pastanaga",
+  database="eleccions"
+)
+
+cursor = cnx.cursor()
+
+# Nom o path del fitxer
+f = ("08021606.DAT")
+
+truncate=("TRUNCATE TABLE vots_candidatures_prov;")
+cursor.execute(truncate)
+
+
+try :
+    # Intentem obrir el fitxer en només lectura
+    with open(f, "r") as fitxer:
+        for linia in fitxer:
+          # Tractem la línia del fitxer
+
+            l1 = []
+            l2 = []
+            
+            vots = linia[20:28]
+            candidats_obtinguts = linia[28:33]
+
+            query1 = ("SELECT provincia_id FROM provincies WHERE codi_ine = %s")
+            codi_ine = linia[11:13]
+            
+            if codi_ine != '99':
+                l1.append(codi_ine)
+                cursor.execute(query1, l1)
+            
+                for x in cursor:
+                    lp=list(x)
+
+                query2 = ("SELECT candidatura_id FROM candidatures WHERE codi_candidatura = %s")
+                codi_candidatura = linia[14:20]
+                l2.append(codi_candidatura)
+                cursor.execute(query2, l2)
+
+                for y in cursor:
+                    lc=list(y)
+
+                insert = ("INSERT INTO vots_candidatures_prov " 
+                                "(provincia_id,candidatura_id,vots,candidats_obtinguts) " 
+                                "VALUES (%s,%s,%s,%s)")
+
+                provincia_id = lp[0]
+                candidatura_id = lc[0]
+                val = [provincia_id, candidatura_id, vots, candidats_obtinguts]
+                            
+                cursor.execute(insert, val)
+                cnx.commit()
+            
 except OSError as e:
     print("No s'ha pogut obrir el fitxer")
 

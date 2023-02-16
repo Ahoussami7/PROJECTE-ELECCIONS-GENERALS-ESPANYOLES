@@ -9,7 +9,6 @@ funcions d'agregat o grups:
 **Enumera els candidats (Ascendent) que siguin Titulars(T) i els que siguin Suplents(S),
 la taula s'ha de veure de la següent manera:**
 
-
 |candidat_id|T/S|
 
 
@@ -23,22 +22,26 @@ SELECT candidat_id, tipus AS "T/S"
 
 |provincia_id|nom|
 
-* * *
-**Quants municipis tenen Total municipal amb INE entre 100-101 Descendent:**
 
-|Municipis|TMNCP|
-
-* * *
-**Quants municipis tenen Total municipal amb INE entre 100-101 Descendent:**
-
-
-|Municipis|TMNCP|
+SELECT provincia_id,nom
+    FROM provincies
+    WHERE nom RLIKE '[aeiou]{3}';
 
 * * *
-**Els municipis que tinguin menys de 10000000 vots en blanc ha de tenir
-les dades oficials amb valor No.**
+**Els municipis que tinguin menys de 10000000 vots en blanc, i només escull els que no continguin caràcters especials en el seu nom.**
 
-|Municipis|Vots blanc|NoOficial|
+|Municipis|Vots blanc|
+
+
+
+* * *
+**Quants municipis tenen un INE  99 de forma descendent:**
+
+|municipi_id|nom| 
+
+**De la taula candidatures selecciona les que tinguin un nom curt entre 1 i 4 lletres i de candidatura_id només numeros parells.**
+
+|candidatura_id|nomcurt|
 
 * * *
 Categoria 2: 5 preguntes de consultes de combinacions de més d'una taula:

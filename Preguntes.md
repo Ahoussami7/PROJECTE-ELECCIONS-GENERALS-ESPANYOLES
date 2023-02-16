@@ -12,17 +12,21 @@ la taula s'ha de veure de la següent manera:**
 
 |candidat_id|T/S|
 
+
+SELECT candidat_id, tipus AS "T/S"
+    FROM candidats
+    WHERE tipus = 'T' OR tipus = 'S'
+    ORDER BY candidat_id;
+
 * * * 
-**Segons la comunitat Catalunya, quin numero d'escons té ordenats descendent.**
+**Quina provincia te en el nom 2 vocals seguides.**
 
-
-|nom|num_escons|
+|provincia_id|nom|
 
 * * *
-**FA FALTA PREGUNTA NOVA**
+**Quants municipis tenen Total municipal amb INE entre 100-101 Descendent:**
 
-
-|Municipis|Vtotals|VNuls|
+|Municipis|TMNCP|
 
 * * *
 **Quants municipis tenen Total municipal amb INE entre 100-101 Descendent:**

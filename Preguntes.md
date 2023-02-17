@@ -46,7 +46,7 @@ FROM municipis
 WHERE codi_ine LIKE '%99'
 ORDER BY codi_ine DESC;
 
-
+* * *
 **De la taula candidatures selecciona les que tinguin un nom curt contenint la lletra 'A' i de candidatura_id només numeros parells.**
 
 |candidatura_id|nomcurt|

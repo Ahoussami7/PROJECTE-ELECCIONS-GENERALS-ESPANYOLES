@@ -28,20 +28,32 @@ SELECT provincia_id,nom
     WHERE nom RLIKE '[aeiou]{3}';
 
 * * *
-**Els municipis que tinguin menys de 10000000 vots en blanc, i només escull els que no continguin caràcters especials en el seu nom.**
+**Selecciona de les persones el seu total**
 
-|Municipis|Vots blanc|
+|Total|
 
+SELECT COUNT(DISTINCT persona_id) AS Total
+FROM persones;
 
 
 * * *
 **Quants municipis tenen un INE  99 de forma descendent:**
 
-|municipi_id|nom| 
+|municipi_id|nom|codi_ine|
 
-**De la taula candidatures selecciona les que tinguin un nom curt entre 1 i 4 lletres i de candidatura_id només numeros parells.**
+SELECT municipi_id, nom, codi_ine
+FROM municipis 
+WHERE codi_ine LIKE '%99'
+ORDER BY codi_ine DESC;
+
+
+**De la taula candidatures selecciona les que tinguin un nom curt contenint la lletra 'A' i de candidatura_id només numeros parells.**
 
 |candidatura_id|nomcurt|
+
+SELECT candidatura_id, nom_curt AS nomcurt
+FROM candidatures
+WHERE MOD(candidatura_id,2) = 0 AND SUBSTRING(nom_curt, 5, 1) = 'A';
 
 * * *
 Categoria 2: 5 preguntes de consultes de combinacions de més d'una taula:

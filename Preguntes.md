@@ -88,10 +88,15 @@ el número de candidats obtenits per la candidatura siguin més de 2.**
 |Sigles|Totalvots|
 
 * * *
-**Fes un top 5 candidatures amb menys de 100 vots provincials de l'any 2016, juntament amb el total de candidats de cada candidatura.**
+**Fes un top 5 candidatures amb menys de 100 vots provincials de l'any 2016.
 
+|Candidatures|vots|
 
-|Candidatures|Totalcndts|
+SELECT cds.candidatura_id AS Candidatures, vcp.vots
+FROM candidatures cds
+INNER JOIN vots_candidatures_prov vcp ON cds.candidatura_id = vcp.candidatura_id
+INNER JOIN candidats can ON cds.candidatura_id = can.candidatura_id
+WHERE vots < 100;
 
 * * *
 Categoria 4: 1 pregunta utilitzant WINDOW FUNCTIONS o recursivitat

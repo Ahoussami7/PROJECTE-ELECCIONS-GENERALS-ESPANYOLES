@@ -88,7 +88,7 @@ el número de candidats obtenits per la candidatura siguin més de 2.**
 |Sigles|Totalvots|
 
 * * *
-**Fes un top 5 candidatures amb menys vots de l'any 2016, juntament amb el total de candidats de cada candidatura.**
+**Fes un top 5 candidatures amb menys de 100 vots provincials de l'any 2016, juntament amb el total de candidats de cada candidatura.**
 
 
 |Candidatures|Totalcndts|

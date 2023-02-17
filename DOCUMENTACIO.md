@@ -576,3 +576,89 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
+# Insert de la Taula vots_candidatures_ca
+```sql
+import mysql.connector
+
+cnx = mysql.connector.connect(
+  host="192.168.56.101",
+  user="perepi",
+  password="pastanaga",
+  database="eleccions"
+)
+
+cursor = cnx.cursor()
+
+# Nom o path del fitxer
+f = ("08021606.DAT")
+
+truncate=("TRUNCATE TABLE vots_candidatures_ca;")
+cursor.execute(truncate)
+
+unics=[]
+repetits=[]
+valors=[]
+
+try :
+    with open(f, "r") as fitxer:
+        for linia in fitxer:
+
+            l1=[]
+            l2=[]
+            
+            vots=linia[20:28]
+
+            query1=("SELECT comunitat_aut_id FROM comunitats_autonomes WHERE codi_ine = %s")
+            codi_comunitat=linia[9:11]
+            l1.append(codi_comunitat)
+            cursor.execute(query1, l1)
+            
+            for x in cursor:
+                lco=list(x)
+
+            query2=("SELECT candidatura_id FROM candidatures WHERE codi_candidatura = %s")
+            codi_candidatura=linia[14:20]
+            l2.append(codi_candidatura)
+            cursor.execute(query2, l2)
+
+            for y in cursor:
+                lca=list(y)
+
+            comunitat_autonoma_id=lco[0]
+            candidatura_id=lca[0]    
+            
+            valors+=[[comunitat_autonoma_id,candidatura_id,vots]]
+
+        for x in valors:
+            r=x[:2]
+            print(f"{r}")
+            if r not in unics:
+                unics.append(r)
+                insert = ("INSERT INTO vots_candidatures_ca " 
+                        "(comunitat_autonoma_id,candidatura_id,vots) " 
+                            "VALUES (%s,%s,%s)")
+                comunitat_autonoma_id=x[0]
+                candidatura_id=x[1]
+                vots=x[2]
+                val=[comunitat_autonoma_id,candidatura_id,vots]
+                                        
+                cursor.execute(insert, val)
+                cnx.commit()
+            else:
+                if x not in repetits:
+                    repetits.append(x)
+                    comunitat_autonoma_id=x[0]
+                    candidatura_id=x[1]
+                    vots=x[2]
+                    update = ("UPDATE vots_candidatures_ca " 
+                                f"SET vots = vots + {vots} WHERE comunitat_autonoma_id = {comunitat_autonoma_id} "
+                                  f"AND candidatura_id = {candidatura_id}")                    
+                    cursor.execute(update)
+                    cnx.commit()
+            
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
+
+cursor.close()
+cnx.close()
+```

@@ -245,7 +245,7 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ```
-# Script BD_eleccions_v2.sql
+## Script BD_eleccions_v2.sql
 ```sql
 -- Insert de la taula eleccions
 INSERT INTO eleccions (eleccio_id,nom,data)
@@ -276,7 +276,7 @@ ALTER TABLE persones
 ALTER TABLE persones
     MODIFY COLUMN dni CHAR(10) NULL;
 ```
-# Insert de la taula Candidatures
+## Insert de la taula Candidatures
 ```python
 import mysql.connector
 
@@ -325,7 +325,7 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la taula comunitats autònomes + Taula Provincies
+## Insert de la taula comunitats autònomes + Taula Provincies
 ```python
 import mysql.connector
 
@@ -394,7 +394,7 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la taula municipis
+## Insert de la taula municipis
 ```python
 import mysql.connector
 
@@ -444,7 +444,117 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la Taula Persones + Taula Candidats
+## Insert de la Taula eleccions_municipis
+```python
+import mysql.connector
+
+cnx = mysql.connector.connect(
+  host="192.168.56.101",
+  user="perepi",
+  password="pastanaga",
+  database="eleccions"
+)
+
+cursor = cnx.cursor()
+
+# Nom o path del fitxer
+f = ("05021606.DAT")
+
+truncate = ("TRUNCATE eleccions_municipis")
+cursor.execute(truncate)
+
+unics=[]
+repetits=[]
+valors=[]
+
+try :
+    with open(f, "r") as fitxer:
+        for linia in fitxer:
+            
+            l1=[]
+            l2=[]
+
+            query1=("SELECT eleccio_id FROM eleccions WHERE eleccio_id = %s")
+            eleccioId = linia[0:2]
+            l1.append(eleccioId)
+            cursor.execute(query1, l1)
+
+            for e in cursor:
+                ele=list(e)
+
+            query2=("SELECT municipi_id FROM municipis WHERE codi_ine = %s")
+            codi_ine=linia[11:16]
+            l2.append(codi_ine)
+            cursor.execute(query2, l2)
+
+            for m in cursor:
+                print(m)
+                muni=list(m)
+                
+            eleccio_id=ele[0]
+            municipi_id=muni[0]
+            num_meses=linia[6:8]
+            cens=linia[141:149]
+            vots_emesos=linia[173:181]
+            vots_valids=linia[216:224]
+            vots_candidatures=linia[205:213]
+            vots_blanc=linia[189:197]
+            vots_nuls=linia[197:205]
+            
+            valors+=[[eleccio_id,municipi_id,num_meses,cens,vots_emesos,vots_valids,vots_candidatures,vots_blanc,vots_nuls]]
+            
+        for x in valors:
+            r=x[:2]
+            print(f"{r}")
+            if r not in unics:
+                unics.append(r)
+                insert = ("INSERT INTO eleccions_municipis "
+                            "(eleccio_id,municipi_id,num_meses,cens,vots_emesos,vots_valids,vots_candidatures,vots_blanc,vots_nuls) "
+                                "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+                eleccio_id=x[0]
+                municipi_id=x[1]
+                num_meses=x[2]
+                cens=x[3]
+                vots_emesos=x[4]
+                vots_valids=x[5]
+                vots_candidatures=x[6]
+                vots_blanc=x[7]
+                vots_nuls=x[8]
+                val = (eleccio_id,municipi_id,num_meses,
+                cens,vots_emesos,vots_valids,vots_candidatures,vots_blanc,vots_nuls)                       
+                cursor.execute(insert, val)
+                cnx.commit()
+            else:
+                if x not in repetits:
+                    repetits.append(x)
+                    eleccio_id=x[0]
+                    municipi_id=x[1]
+                    num_meses=x[2]
+                    cens=x[3]
+                    vots_emesos=x[4]
+                    vots_valids=x[5]
+                    vots_candidatures=x[6]
+                    vots_blanc=x[7]
+                    vots_nuls=x[8]
+                    update = (
+                        "UPDATE eleccions_municipis "
+                            f"SET cens = cens + {cens},  "
+                            f"vots_emesos = vots_emesos + {vots_emesos}, "
+                            f"vots_valids = vots_valids + {vots_valids}, "
+                            f"vots_candidatures = vots_candidatures + {vots_candidatures}, "  
+                            f"vots_blanc = vots_blanc + {vots_blanc}, "
+                            f"vots_nuls = vots_nuls + {vots_nuls} " 
+                            f"WHERE municipi_id = {municipi_id}"
+                    )
+                    cursor.execute(update)
+                    cnx.commit()
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
+
+cursor.close()
+cnx.close()
+```
+## Insert de la Taula Persones + Taula Candidats
 ```python
 import mysql.connector
 import sys
@@ -509,8 +619,8 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la Taula vots_candidatures_prov
-```sql
+## Insert de la Taula vots_candidatures_prov
+```python
 import mysql.connector
 
 cnx = mysql.connector.connect(
@@ -576,8 +686,8 @@ except OSError as e:
 cursor.close()
 cnx.close()
 ```
-# Insert de la Taula vots_candidatures_ca
-```sql
+## Insert de la Taula vots_candidatures_ca
+```python
 import mysql.connector
 
 cnx = mysql.connector.connect(
@@ -656,6 +766,103 @@ try :
                     cursor.execute(update)
                     cnx.commit()
             
+except OSError as e:
+    print("No s'ha pogut obrir el fitxer")
+
+cursor.close()
+cnx.close()
+```
+## Insert de la Taula vots_candidatures_mun
+```python
+import mysql.connector
+
+cnx = mysql.connector.connect(
+  host="192.168.56.101",
+  user="perepi",
+  password="pastanaga",
+  database="eleccions"
+)
+
+cursor = cnx.cursor()
+
+# Nom o path del fitxer
+f = ("06021606.DAT")
+
+truncate = ("TRUNCATE vots_candidatures_mun")
+cursor.execute(truncate)
+
+unics=[]
+repetits=[]
+valors=[]
+
+try :
+    with open(f, "r") as fitxer:
+        for linia in fitxer:
+            
+            l1=[]
+            l2=[]
+            l3=[]
+
+            vots = linia[22:30]
+
+            query1=("SELECT eleccio_id FROM eleccions WHERE eleccio_id = %s")
+            eleccioId = linia[0:2]
+            l1.append(eleccioId)
+            cursor.execute(query1, l1)
+
+            for e in cursor:
+                ele=list(e)
+
+            query2=("SELECT candidatura_id FROM candidatures WHERE codi_candidatura = %s")
+            codi_candidatura=linia[16:22]
+            l2.append(codi_candidatura)
+            cursor.execute(query2, l2)
+
+            for d in cursor:
+                cand=list(d)
+
+            query3=("SELECT municipi_id FROM municipis WHERE codi_ine = %s")
+            codi_ine = linia[9:14]
+            l3.append(codi_ine)
+            cursor.execute(query3, l3)
+
+            for m in cursor:
+                muni=list(m)
+
+            eleccio_id=ele[0]
+            municipi_id=muni[0]
+            candidatura_id=cand[0]
+            
+            valors+=[[eleccio_id,municipi_id,candidatura_id,vots]]
+
+        for x in valors:
+            r=x[:3]
+            print(f"{r}")
+            if r not in unics:
+                unics.append(r)
+                insert = ("INSERT INTO vots_candidatures_mun "
+                            "(eleccio_id,municipi_id,candidatura_id,vots) " 
+                               "VALUES (%s,%s,%s,%s)")
+                eleccio_id=x[0]
+                municipi_id=x[1]
+                candidatura_id=x[2]
+                vots=x[3]
+                val = (eleccio_id,municipi_id,candidatura_id,vots)                       
+                cursor.execute(insert, val)
+                cnx.commit()
+            else:
+                if x not in repetits:
+                    repetits.append(x)
+                    eleccio_id=x[0]
+                    municipi_id=x[1]
+                    candidatura_id=x[2]
+                    vots=x[3]
+                    update = ("UPDATE vots_candidatures_mun " 
+                                f"SET vots = vots + {vots} WHERE municipi_id = {municipi_id} "
+                                  f"AND candidatura_id = {candidatura_id}")                    
+                    cursor.execute(update)
+                    cnx.commit()
+
 except OSError as e:
     print("No s'ha pogut obrir el fitxer")
 
